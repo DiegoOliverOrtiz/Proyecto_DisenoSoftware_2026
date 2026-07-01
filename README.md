@@ -20,6 +20,7 @@ Antes de arrancar la aplicación, asegúrate de tener instalado lo siguiente:
 
 También es importante dejar libres los puertos 8080, 8081 y 4200.
 
+
 ## 1. Preparar MySQL
 
 1. Instala MySQL Server.
@@ -33,3 +34,90 @@ CREATE DATABASE esientradas;
 CREATE USER 'entradas_app'@'localhost' IDENTIFIED BY 'Cambiar123';
 GRANT ALL PRIVILEGES ON esientradas.* TO 'entradas_app'@'localhost';
 FLUSH PRIVILEGES;
+
+
+## 2. Preparar SQL Server
+
+1. Instala SQL Server y SQL Server Management Studio.
+2. Crea una base de datos llamada esiusuarios.
+3. Crea un login de aplicación con una contraseña segura.
+4. Asegúrate de que el motor de SQL Server esté disponible en localhost:1433.
+
+Ejemplo de SQL para SQL Server:
+
+```sql
+CREATE DATABASE esiusuarios;
+GO
+
+CREATE LOGIN usuarios_app WITH PASSWORD = 'UsuariosApp!2026';
+GO
+
+USE esiusuarios;
+CREATE USER usuarios_app FOR LOGIN usuarios_app;
+ALTER ROLE db_owner ADD MEMBER usuarios_app;
+GO
+
+
+## 3. Configurar variables de entorno
+
+El backend principal usa variables de entorno para la conexión a MySQL y para la comunicación con el servicio de usuarios.
+En PowerShell, desde la raíz del proyecto, ejecuta:
+
+```powershell
+$env:MYSQL_URL="jdbc:mysql://localhost:3306/esientradas?serverTimezone=UTC&autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true"
+$env:MYSQL_USER="entradas_app"
+$env:MYSQL_PASSWORD="Cambiar123"
+$env:ESIUSUARIOS_URL="http://localhost:8081"
+$env:FRONTEND_BASE_URL="http://localhost:4200"
+
+Para el backend de usuarios, crea un archivo .env en la carpeta usuarios a partir del ejemplo existente y ajusta los valores:
+
+SQLSERVER_HOST=localhost
+SQLSERVER_PORT=1433
+SQLSERVER_DATABASE=esiusuarios
+SQLSERVER_USER=usuarios_app
+SQLSERVER_PASSWORD=UsuariosApp!2026
+
+
+## 4. Arrancar el backend de usuarios
+
+Abre una terminal y ejecuta:
+
+```bash
+cd esiusuarios\usuarios
+Copy-Item .env.example .env
+.\start-dev.ps1
+
+Este servicio quedará disponible en: http://localhost:8081
+
+
+## 5. Arrancar el backend principal
+
+Abre otra terminal y ejecuta:
+
+```bash
+cd Dise-oSW
+.\mvnw.cmd -Pdev spring-boot:run
+
+Este servicio quedará disponible en: http://localhost:8080
+
+
+## 6. Arrancar el frontend
+
+Abre una tercera terminal y ejecuta:
+
+```bash
+cd Frontend-Dise-oSoftware
+npm install
+npm start
+
+La interfaz quedará disponible en: http://localhost:4200
+
+
+## 7. Verificación final
+Si todo está correctamente configurado, el sistema debería ya de estar en ejecución y se debería poder interactuar desde el front end simulando la reserva de entradas, su posterior compra y el sistema de emails que envía las entradas o sirve para configurar una cuenta de usuario.
+
+Notas importantes
+Las tablas de la base de datos se crean automáticamente al iniciar la aplicación cuando corresponde.
+Si se quiere probar el flujo de pago, es necesario configurar las claves de Stripe.
+Si alguno de los puertos está ocupado, debe liberarse antes de volver a arrancar el servicio.
