@@ -8,7 +8,7 @@ Este proyecto está compuesto por tres componentes:
 
 ## Prerrequisitos
 
-Antes de arrancar la aplicación, asegúrate de tener instalado lo siguiente:
+Antes de arrancar la aplicación, se debe tener instalado lo siguiente:
 
 - Java 21 para el backend principal.
 - Java 17 para el backend de usuarios.
@@ -23,9 +23,9 @@ También es importante dejar libres los puertos 8080, 8081 y 4200.
 
 ## 1. Preparar MySQL
 
-1. Instala MySQL Server.
-2. Crea una base de datos llamada `esientradas`.
-3. Crea un usuario de aplicación y asigna permisos sobre esa base de datos.
+1. Tener instalado MySQL Server.
+2. Crear una base de datos llamada `esientradas`.
+3. Crear un usuario de aplicación y asignar permisos sobre esa base de datos.
 
 Ejemplo de SQL para MySQL:
 
@@ -38,10 +38,10 @@ FLUSH PRIVILEGES;
 
 ## 2. Preparar SQL Server
 
-1. Instala SQL Server y SQL Server Management Studio.
-2. Crea una base de datos llamada esiusuarios.
-3. Crea un login de aplicación con una contraseña segura.
-4. Asegúrate de que el motor de SQL Server esté disponible en localhost:1433.
+1. Tener instalado SQL Server y SQL Server Management Studio.
+2. Crear una base de datos llamada esiusuarios.
+3. Crear un login de aplicación con una contraseña segura.
+4. Hay que asegurarse de que el motor de SQL Server esté disponible en localhost:1433.
 
 Ejemplo de SQL para SQL Server:
 
@@ -61,7 +61,7 @@ GO
 ## 3. Configurar variables de entorno
 
 El backend principal usa variables de entorno para la conexión a MySQL y para la comunicación con el servicio de usuarios.
-En PowerShell, desde la raíz del proyecto, ejecuta:
+En PowerShell, desde la raíz del proyecto, hay que ejecutar:
 
 ```powershell
 $env:MYSQL_URL="jdbc:mysql://localhost:3306/esientradas?serverTimezone=UTC&autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true"
@@ -70,7 +70,7 @@ $env:MYSQL_PASSWORD="Cambiar123"
 $env:ESIUSUARIOS_URL="http://localhost:8081"
 $env:FRONTEND_BASE_URL="http://localhost:4200"
 ```
-Para el backend de usuarios, crea un archivo .env en la carpeta usuarios a partir del ejemplo existente y ajusta los valores:
+Para el backend de usuarios, se debe crear un archivo .env en la carpeta usuarios a partir del ejemplo existente y ajustar los valores:
 
 SQLSERVER_HOST=localhost
 SQLSERVER_PORT=1433
@@ -81,7 +81,7 @@ SQLSERVER_PASSWORD=UsuariosApp!2026
 
 ## 4. Arrancar el backend de usuarios
 
-Abre una terminal y ejecuta:
+Abrir una terminal y ejecutar:
 
 ```bash
 cd esiusuarios\usuarios
@@ -93,7 +93,7 @@ Este servicio quedará disponible en: http://localhost:8081
 
 ## 5. Arrancar el backend principal
 
-Abre otra terminal y ejecuta:
+Abrir otra terminal y ejecutar:
 
 ```bash
 cd Dise-oSW
@@ -104,7 +104,7 @@ Este servicio quedará disponible en: http://localhost:8080
 
 ## 6. Arrancar el frontend
 
-Abre una tercera terminal y ejecuta:
+Abrir una tercera terminal y ejecutar:
 
 ```bash
 cd Frontend-Dise-oSoftware
@@ -115,9 +115,10 @@ La interfaz quedará disponible en: http://localhost:4200
 
 
 ## 7. Verificación final
-Si todo está correctamente configurado, el sistema debería ya de estar en ejecución y se debería poder interactuar desde el front end simulando la reserva de entradas, su posterior compra y el sistema de emails que envía las entradas o sirve para configurar una cuenta de usuario.
+Si todo está correctamente configurado, el sistema debería ya de estar en ejecución y se debería poder interactuar desde el frontend simulando la reserva de entradas, su posterior compra y el sistema de correos electrónicos que envía las entradas o sirve para configurar una cuenta de usuario.
 
 Notas importantes
+
 Las tablas de la base de datos se crean automáticamente al iniciar la aplicación cuando corresponde.
 Si se quiere probar el flujo de pago, es necesario configurar las claves de Stripe.
-Si alguno de los puertos está ocupado, debe liberarse antes de volver a arrancar el servicio.
+Si alguno de los puertos está ocupado, debe liberarse antes de volver a arrancar el servicio o configurar unos puertos diferentes modificando server-port en application-dev.properties.
