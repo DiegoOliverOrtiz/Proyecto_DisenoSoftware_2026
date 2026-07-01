@@ -34,7 +34,7 @@ CREATE DATABASE esientradas;
 CREATE USER 'entradas_app'@'localhost' IDENTIFIED BY 'Cambiar123';
 GRANT ALL PRIVILEGES ON esientradas.* TO 'entradas_app'@'localhost';
 FLUSH PRIVILEGES;
-
+```
 
 ## 2. Preparar SQL Server
 
@@ -56,7 +56,7 @@ USE esiusuarios;
 CREATE USER usuarios_app FOR LOGIN usuarios_app;
 ALTER ROLE db_owner ADD MEMBER usuarios_app;
 GO
-
+```
 
 ## 3. Configurar variables de entorno
 
@@ -69,7 +69,7 @@ $env:MYSQL_USER="entradas_app"
 $env:MYSQL_PASSWORD="Cambiar123"
 $env:ESIUSUARIOS_URL="http://localhost:8081"
 $env:FRONTEND_BASE_URL="http://localhost:4200"
-
+```
 Para el backend de usuarios, crea un archivo .env en la carpeta usuarios a partir del ejemplo existente y ajusta los valores:
 
 SQLSERVER_HOST=localhost
@@ -87,7 +87,7 @@ Abre una terminal y ejecuta:
 cd esiusuarios\usuarios
 Copy-Item .env.example .env
 .\start-dev.ps1
-
+```
 Este servicio quedará disponible en: http://localhost:8081
 
 
@@ -98,7 +98,7 @@ Abre otra terminal y ejecuta:
 ```bash
 cd Dise-oSW
 .\mvnw.cmd -Pdev spring-boot:run
-
+```
 Este servicio quedará disponible en: http://localhost:8080
 
 
@@ -110,7 +110,7 @@ Abre una tercera terminal y ejecuta:
 cd Frontend-Dise-oSoftware
 npm install
 npm start
-
+```
 La interfaz quedará disponible en: http://localhost:4200
 
 
