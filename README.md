@@ -117,7 +117,7 @@ La interfaz quedará disponible en: http://localhost:4200
 ## 7. Verificación final
 Si todo está correctamente configurado, el sistema debería ya de estar en ejecución y se debería poder interactuar desde el frontend simulando la reserva de entradas, su posterior compra y el sistema de correos electrónicos que envía las entradas o sirve para configurar una cuenta de usuario.
 
-Notas importantes
+Notas importantes:
 
 Las tablas de la base de datos se crean automáticamente al iniciar la aplicación cuando corresponde.
 Si se quiere probar el flujo de pago, es necesario configurar las claves de Stripe.
